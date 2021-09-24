@@ -13,7 +13,7 @@ namespace ZChess.Domain
         public PieceColumn Column { get; set; }
         public PiecePosition(PieceColumn pieceColumn, int pieceRow)
         {
-            if (pieceRow < 1 || pieceRow > 8)
+            if (!BoardValidator.IsValidRow(pieceRow))
                 throw new ArgumentException("Row should be between 1 and 8", "pieceRow");
 
             this.Row = pieceRow;

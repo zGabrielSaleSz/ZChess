@@ -21,10 +21,27 @@ namespace ZChess.Tests
             pawn.SetPosition(currentPosition);
 
             // Act
-            PiecePosition newPosition = new PiecePosition(newColumn, newRow);
+            Action action = () => pawn.MoveTo(new PiecePosition(newColumn, newRow));
 
             // Assert
-            Assert.Throws<ArgumentException>(nameof(pawn.position), () => pawn.MoveTo(newPosition));
+            Assert.Throws<ArgumentException>("position", action);
+            Assert.Equal(currentPosition, pawn.position);
+        }
+
+        [Theory]
+        [InlineData(Team.White, PieceColumn.D, 4, PieceColumn.D, 4)]
+        public void MoveTo_ValidPosition_ShouldBeTheSameReference(Team team, PieceColumn currentColumn, int currentRow, PieceColumn newColumn, int newRow)
+        {
+            // Arrange
+            Pawn pawn = new Pawn(team);
+            PiecePosition currentPosition = new PiecePosition(currentColumn, currentRow);
+            pawn.SetPosition(currentPosition);
+
+            // Act
+            pawn.MoveTo(new PiecePosition(newColumn, newRow));
+ 
+            // Assert
+            Assert.Equal(currentPosition, pawn.position);
         }
     }
 }

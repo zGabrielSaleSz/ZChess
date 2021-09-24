@@ -13,7 +13,7 @@ namespace ZChess.Domain.Extensions
         //{
         //    int curentColumnPosition = (int)pieceColumn;
         //    int newColumn = curentColumnPosition + movement;
-        //    if(newColumn < 1 || )
+        //    if (newColumn < 1 || )
         //}
     }
 }

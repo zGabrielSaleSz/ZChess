@@ -13,10 +13,6 @@ namespace ZChess.Domain
         {
             return row > 0 && row < 9;
         }
-        public static bool IsValidColumn(PieceColumn pieceColumn)
-        {
-            return IsValidColumn((int)pieceColumn);
-        }
         public static bool IsValidColumn(int column)
         {
             return column > 0 && column < 9;

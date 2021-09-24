@@ -28,7 +28,8 @@ namespace ZChess.Tests
             // Act
             PiecePosition newPosition = new PiecePosition(newColumn, newRow);
             bool result = pawn.CanCaptureTo(newPosition);
-            //Assert
+            
+            // Assert
             Assert.False(result);
         }
     }

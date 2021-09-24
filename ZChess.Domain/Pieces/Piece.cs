@@ -8,7 +8,7 @@ using ZChess.Domain.Pieces.Interfaces;
 
 namespace ZChess.Domain.Pieces
 {
-    public abstract class Piece 
+    public abstract class Piece
     {
         public Team team { get; private set; }
         private bool captured { get; set; }
@@ -17,6 +17,7 @@ namespace ZChess.Domain.Pieces
         {
             this.team = team;
             this.captured = false;
+            
         }
 
         public void SetPosition(PiecePosition position)
@@ -26,10 +27,9 @@ namespace ZChess.Domain.Pieces
 
         public void MoveTo(PiecePosition position)
         {
-            if (CanMoveTo(position))
-                SetPosition(position);
-            else
-                throw new ArgumentException($"Can't move the piece to the new position", "position");
+            if (!CanMoveTo(position))
+                throw new ArgumentException($"Can't move the piece to the new position", nameof(position));
+            SetPosition(position);
         }
 
         public void SetCaptured()

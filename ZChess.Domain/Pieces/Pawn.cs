@@ -36,34 +36,24 @@ namespace ZChess.Domain.Pieces
             List<PiecePosition> availablePositions = new List<PiecePosition>();
             if(team == Team.White)
             {
-                AddPositionToListIfNotNull(availablePositions, GetPositionByDislocationIfIsValid(-1, 1));
-                AddPositionToListIfNotNull(availablePositions, GetPositionByDislocationIfIsValid(1, 1));
+                AddPositionToList(availablePositions, -1, 1);
+                AddPositionToList(availablePositions, 1, 1);
             }
             else
             {
-                AddPositionToListIfNotNull(availablePositions, GetPositionByDislocationIfIsValid(-1, -1));
-                AddPositionToListIfNotNull(availablePositions, GetPositionByDislocationIfIsValid(1, -1));
+                AddPositionToList(availablePositions, -1, -1);
+                AddPositionToList(availablePositions, 1, -1);
             }
             return availablePositions;
         }
 
-        private void AddPositionToListIfNotNull(List<PiecePosition> positions, PiecePosition newPosition)
-        {
-            if (newPosition != null)
-                positions.Add(newPosition);
-        }
-        private PiecePosition GetPositionByDislocationIfIsValid(int dislocationColumn, int dislocationRow)
+        private void AddPositionToList(List<PiecePosition> positions, int dislocationColumn, int dislocationRow)
         {
             try
             {
-                return position.GetPositionByDislocation(dislocationColumn, dislocationRow);
+                positions.Add(position.GetPositionByDislocation(dislocationColumn, dislocationRow));
             }
-            catch
-            {
-                return null;
-            }
-        }
-
-     
+            catch { }
+        }     
     }
 }
