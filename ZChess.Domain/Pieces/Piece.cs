@@ -11,18 +11,24 @@ namespace ZChess.Domain.Pieces
     public abstract class Piece
     {
         public Team team { get; private set; }
-        private bool captured { get; set; }
-        public PiecePosition position { get; set; }
+        public PiecePosition Position { get; private set; }
+        public bool Captured { get; private set; }
+        public int Movements { get; private set; }
         public Piece(Team team)
         {
             this.team = team;
-            this.captured = false;
-            
+            this.Captured = false;
+            Position = null;
         }
 
         public void SetPosition(PiecePosition position)
         {
-            this.position = position;
+            if (position == null)
+                throw new ArgumentNullException(nameof(position));
+
+            if (Position != null && (Position.Column != position.Column || Position.Row != position.Row))
+                Movements++;
+            this.Position = position;
         }
 
         public void MoveTo(PiecePosition position)
@@ -34,13 +40,9 @@ namespace ZChess.Domain.Pieces
 
         public void SetCaptured()
         {
-            this.captured = true;
+            this.Captured = true;
         }
 
-        public bool IsCaptured()
-        {
-            return this.captured;
-        }
         public abstract bool CanMoveTo(PiecePosition newPosition);
         public abstract bool CanCaptureTo(PiecePosition newPosition);
     }

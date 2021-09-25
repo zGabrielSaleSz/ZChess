@@ -13,22 +13,23 @@ namespace ZChess.Domain.Pieces
         public Pawn(Team team) : base(team) { }
         public override bool CanCaptureTo(PiecePosition newPosition)
         {
-            if (position.Column == newPosition.Column)
+            if (Position.Column == newPosition.Column)
                 return false;
             var availableMovementFound = GetAvailableMovementsToCapture().Where(m => m.Row == newPosition.Row && m.Column == newPosition.Column).FirstOrDefault();
             return availableMovementFound != null;
         }
         public override bool CanMoveTo(PiecePosition newPosition)
         {
-            bool isValidColumn = this.position.Column == newPosition.Column;
-            if (!isValidColumn)
+            bool isSameColumn = this.Position.Column == newPosition.Column;
+            if (!isSameColumn)
                 return false;
 
-            if(team == Team.White)
-                return newPosition.Row - position.Row == 1;
-            
-            else
-                return position.Row - newPosition.Row == 1;
+            int differenceInRows = newPosition.Row - Position.Row;
+            if (team == Team.Black)
+            {
+                differenceInRows = differenceInRows * -1;
+            }
+            return differenceInRows == 1 || (differenceInRows == 2 && this.Movements == 0);
         }
 
         private IEnumerable<PiecePosition> GetAvailableMovementsToCapture()
@@ -51,7 +52,7 @@ namespace ZChess.Domain.Pieces
         {
             try
             {
-                positions.Add(position.GetPositionByDislocation(dislocationColumn, dislocationRow));
+                positions.Add(Position.GetPositionByDislocation(dislocationColumn, dislocationRow));
             }
             catch { }
         }     
